@@ -30,47 +30,59 @@ version(Darwin):
 unittest
 {
     import std.stdio;
-    darwin_cpu_cache_info info = void;
-    get_darwin_cpu_cache_info(info);
+    darwin_cpu_info info = void;
+    get_darwin_cpu_info(info);
     "#######################################".writeln;
     "########## SYS/DARWIN REPORT ##########".writeln;
     "#######################################".writeln;
-    "page size = %s KB".writefln(info.PAGESIZE >> 10);
-    "cache line = %s B".writefln(info.CACHELINE);
-    "L1i cache size = %s KB".writefln(info.L1ICACHESIZE >> 10);
-    "L1d cache size = %s KB".writefln(info.L1DCACHESIZE >> 10);
-    "L2 cache size = %s KB".writefln(info.L2CACHESIZE >> 10);
-    "L3 cache size = %s KB".writefln(info.L3CACHESIZE >> 10);
+    "CPUs = %s KB".writefln(info.packages);
+    "cores per cpu = %s KB".writefln(info.physicalcpu / info.packages);
+    "threads per cpu = %s KB".writefln(info.logicalcpu / info.packages);
+    "page size = %s KB".writefln(info.pagesize >> 10);
+    "cache line = %s B".writefln(info.cacheline);
+    "L1i cache size = %s KB".writefln(info.l1icachesize >> 10);
+    "L1d cache size = %s KB".writefln(info.l1dcachesize >> 10);
+    "L2 cache size = %s KB".writefln(info.l2cachesize >> 10);
+    "L3 cache size = %s KB".writefln(info.l3cachesize >> 10);
 }
 
 nothrow @nogc:
 
-///
-struct darwin_cpu_cache_info
+/// 
+struct darwin_cpu_info
 {
+    /// total CPUs (packages)
+    int packages;
+    /// total cores (physical execution units)
+    int physicalcpu;
+    /// total threads (logical execution units)
+    int logicalcpu;
     /// bytes
-    uint PAGESIZE;
+    int pagesize;
     /// bytes
-    uint CACHELINE;
+    int cacheline;
     /// bytes
-    uint L1ICACHESIZE;
+    int l1icachesize;
     /// bytes
-    uint L1DCACHESIZE;
+    int l1dcachesize;
     /// bytes
-    uint L2CACHESIZE;
+    int l2cachesize;
     /// bytes
-    uint L3CACHESIZE;
+    int l3cachesize;
 }
 
 ///
-void get_darwin_cpu_cache_info(ref darwin_cpu_cache_info info)
+void get_darwin_cpu_info(ref darwin_cpu_info info)
 {
-    info.PAGESIZE = sysctl_hw(HW_PAGESIZE);
-    info.CACHELINE = sysctl_hw(HW_CACHELINE);
-    info.L1ICACHESIZE = sysctl_hw(HW_L1ICACHESIZE);
-    info.L1DCACHESIZE = sysctl_hw(HW_L1DCACHESIZE);
-    info.L2CACHESIZE = sysctl_hw(HW_L2CACHESIZE);
-    info.L3CACHESIZE = sysctl_hw(HW_L3CACHESIZE);
+    info.packages = sysctlbyname1("hw.packages");
+    info.physicalcpu = sysctlbyname1("hw.physicalcpu");
+    info.logicalcpu = sysctlbyname1("hw.logicalcpu");
+    info.pagesize = sysctl_hw(HW_PAGESIZE);
+    info.cacheline = sysctl_hw(HW_CACHELINE);
+    info.l1icachesize = sysctl_hw(HW_L1ICACHESIZE);
+    info.l1dcachesize = sysctl_hw(HW_L1DCACHESIZE);
+    info.l2cachesize = sysctl_hw(HW_L2CACHESIZE);
+    info.l3cachesize = sysctl_hw(HW_L3CACHESIZE);
 }
 
 private:
@@ -88,6 +100,17 @@ int sysctl_hw(int ib)
         return 0;
     return ret;
 }
+extern(C)
+int sysctlbyname(const char *name, void *oldp, size_t *oldlenp, void *newp, size_t newlen);
+package(cpuid) int sysctlbyname1(const char *name)
+{
+    int ret = void;
+    size_t len = ret.sizeof;
+    if (sysctlbyname(name, &ret, &len, null, 0))
+        return 1;
+    return ret;
+}
+
 
 enum
 {
@@ -107,7 +130,7 @@ enum
 {
     HW_MACHINE = 1,         /// string: machine class
     HW_MODEL = 2,           /// string: specific machine model
-    HW_NCPU = 3,            /// int: number of cpus
+    HW_NCPU = 3,            /// int: number of CPUs
     HW_BYTEORDER = 4,       /// int: machine byte order
     HW_PHYSMEM = 5,         /// int: total memory
     HW_USERMEM = 6,         /// int: non-kernel memory
