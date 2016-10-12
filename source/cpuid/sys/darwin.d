@@ -85,6 +85,16 @@ void get_darwin_cpu_info(ref darwin_cpu_info info)
     info.l3cachesize = sysctl_hw(HW_L3CACHESIZE);
 }
 
+//package(cpuid) 
+int sysctlbyname1(const char *name)
+{
+    int ret = void;
+    size_t len = ret.sizeof;
+    if (sysctlbyname(name, &ret, &len, null, 0))
+        return 1;
+    return ret;
+}
+
 private:
 
 extern(C)
@@ -102,15 +112,6 @@ int sysctl_hw(int ib)
 }
 extern(C)
 int sysctlbyname(const char *name, void *oldp, size_t *oldlenp, void *newp, size_t newlen);
-package(cpuid) int sysctlbyname1(const char *name)
-{
-    int ret = void;
-    size_t len = ret.sizeof;
-    if (sysctlbyname(name, &ret, &len, null, 0))
-        return 1;
-    return ret;
-}
-
 
 enum
 {
