@@ -69,19 +69,19 @@ struct gnu_cpu_cache_info
 void get_gnu_cpu_cache_info(ref gnu_cpu_cache_info info)
 {
     import core.sys.posix.unistd;
-    info.LEVEL1_ICACHE_SIZE = cast(long) sysconf(_SC_LEVEL1_ICACHE_SIZE);
-    info.LEVEL1_ICACHE_ASSOC = cast(long) sysconf(_SC_LEVEL1_ICACHE_ASSOC);
-    info.LEVEL1_ICACHE_LINESIZE = cast(long) sysconf(_SC_LEVEL1_ICACHE_LINESIZE);
-    info.LEVEL1_DCACHE_SIZE = cast(long) sysconf(_SC_LEVEL1_DCACHE_SIZE);
-    info.LEVEL1_DCACHE_ASSOC = cast(long) sysconf(_SC_LEVEL1_DCACHE_ASSOC);
-    info.LEVEL1_DCACHE_LINESIZE = cast(long) sysconf(_SC_LEVEL1_DCACHE_LINESIZE);
-    info.LEVEL2_CACHE_SIZE = cast(long) sysconf(_SC_LEVEL2_CACHE_SIZE);
-    info.LEVEL2_CACHE_ASSOC = cast(long) sysconf(_SC_LEVEL2_CACHE_ASSOC);
-    info.LEVEL2_CACHE_LINESIZE = cast(long) sysconf(_SC_LEVEL2_CACHE_LINESIZE);
-    info.LEVEL3_CACHE_SIZE = cast(long) sysconf(_SC_LEVEL3_CACHE_SIZE);
-    info.LEVEL3_CACHE_ASSOC = cast(long) sysconf(_SC_LEVEL3_CACHE_ASSOC);
-    info.LEVEL3_CACHE_LINESIZE = cast(long) sysconf(_SC_LEVEL3_CACHE_LINESIZE);
-    info.LEVEL4_CACHE_SIZE = cast(long) sysconf(_SC_LEVEL4_CACHE_SIZE);
-    info.LEVEL4_CACHE_ASSOC = cast(long) sysconf(_SC_LEVEL4_CACHE_ASSOC);
-    info.LEVEL4_CACHE_LINESIZE = cast(long) sysconf(_SC_LEVEL4_CACHE_LINESIZE);
+    info.LEVEL1_ICACHE_SIZE = cast(int) sysconf(_SC_LEVEL1_ICACHE_SIZE);
+    info.LEVEL1_ICACHE_ASSOC = cast(int) sysconf(_SC_LEVEL1_ICACHE_ASSOC);
+    info.LEVEL1_ICACHE_LINESIZE = cast(int) sysconf(_SC_LEVEL1_ICACHE_LINESIZE);
+    info.LEVEL1_DCACHE_SIZE = cast(int) sysconf(_SC_LEVEL1_DCACHE_SIZE);
+    info.LEVEL1_DCACHE_ASSOC = cast(int) sysconf(_SC_LEVEL1_DCACHE_ASSOC);
+    info.LEVEL1_DCACHE_LINESIZE = cast(int) sysconf(_SC_LEVEL1_DCACHE_LINESIZE);
+    info.LEVEL2_CACHE_SIZE = cast(int) sysconf(_SC_LEVEL2_CACHE_SIZE);
+    info.LEVEL2_CACHE_ASSOC = cast(int) sysconf(_SC_LEVEL2_CACHE_ASSOC);
+    info.LEVEL2_CACHE_LINESIZE = cast(int) sysconf(_SC_LEVEL2_CACHE_LINESIZE);
+    info.LEVEL3_CACHE_SIZE = cast(int) sysconf(_SC_LEVEL3_CACHE_SIZE);
+    info.LEVEL3_CACHE_ASSOC = cast(int) sysconf(_SC_LEVEL3_CACHE_ASSOC);
+    info.LEVEL3_CACHE_LINESIZE = cast(int) sysconf(_SC_LEVEL3_CACHE_LINESIZE);
+    info.LEVEL4_CACHE_SIZE = cast(int) sysconf(_SC_LEVEL4_CACHE_SIZE);
+    info.LEVEL4_CACHE_ASSOC = cast(int) sysconf(_SC_LEVEL4_CACHE_ASSOC);
+    info.LEVEL4_CACHE_LINESIZE = cast(int) sysconf(_SC_LEVEL4_CACHE_LINESIZE);
 }
