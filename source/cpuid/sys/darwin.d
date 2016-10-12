@@ -30,7 +30,7 @@ version(Darwin):
 unittest
 {
     import std.stdio;
-    da_cpu_cache_info info = void;
+    darwin_cpu_cache_info info = void;
     get_darwin_cpu_cache_info(info);
     "#######################################".writeln;
     "########## SYS/DARWIN REPORT ##########".writeln;
@@ -46,7 +46,7 @@ unittest
 nothrow @nogc:
 
 ///
-struct da_cpu_cache_info
+struct darwin_cpu_cache_info
 {
     /// bytes
     uint PAGESIZE;
@@ -63,7 +63,7 @@ struct da_cpu_cache_info
 }
 
 ///
-void get_darwin_cpu_cache_info(ref da_cpu_cache_info info)
+void get_darwin_cpu_cache_info(ref darwin_cpu_cache_info info)
 {
     info.PAGESIZE = sysctl_hw(HW_PAGESIZE);
     info.CACHELINE = sysctl_hw(HW_CACHELINE);
