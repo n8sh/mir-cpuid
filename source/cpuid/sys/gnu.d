@@ -11,7 +11,7 @@ module cpuid.sys.gnu;
 
 
 version (CRuntime_Glibc)
-    version = GGNUClibNUC;
+    version = GNUClib;
 version (D_Ddoc)
     version = GNUClib;
 
