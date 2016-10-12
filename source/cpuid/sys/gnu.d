@@ -66,6 +66,7 @@ struct gnu_cpu_cache_info
 }
 
 ///
+@safe nothrow @nogc
 void get_gnu_cpu_cache_info(ref gnu_cpu_cache_info info)
 {
     import core.sys.posix.unistd;
