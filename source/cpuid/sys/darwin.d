@@ -35,9 +35,9 @@ unittest
     "#######################################".writeln;
     "########## SYS/DARWIN REPORT ##########".writeln;
     "#######################################".writeln;
-    "CPUs = %s KB".writefln(info.packages);
-    "cores per cpu = %s KB".writefln(info.physicalcpu / info.packages);
-    "threads per cpu = %s KB".writefln(info.logicalcpu / info.packages);
+    "CPUs = %s".writefln(info.packages);
+    "cores per cpu = %s".writefln(info.physicalcpu / info.packages);
+    "threads per cpu = %s".writefln(info.logicalcpu / info.packages);
     "page size = %s KB".writefln(info.pagesize >> 10);
     "cache line = %s B".writefln(info.cacheline);
     "L1i cache size = %s KB".writefln(info.l1icachesize >> 10);
